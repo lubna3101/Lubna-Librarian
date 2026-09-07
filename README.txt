@@ -1,21 +1,9 @@
-LUBNA LIBRARIAN - COLLEGE LIBRARY WEBSITE PROTOTYPE
+Lubna Librarian populated website prototype.
+The catalogue data in index.html was generated from the two Excel files supplied in this chat:
+1) HPE Areeba work Statistical Library Books Data Proforma.xlsx
+2) Areeba Verification List of Geography and Physics done.xlsx
 
-Open index.html in a modern browser.
-
-Included:
-- Home page
-- Searchable book catalogue
-- Department filter
-- E-Book/PDF record section
-- Librarian admin form
-- Book metadata fields (Accession, ISBN, Author, DDC, Edition, Publisher, Year, Department, Shelf, Status)
-- Library notices
-- Dashboard statistics
-- Browser-local demo storage
-
-IMPORTANT:
-This is a front-end prototype. It does NOT provide secure multi-user accounts or server-side PDF/database storage.
-For a real college deployment, use a backend such as Django/Laravel/Node.js with MySQL/PostgreSQL, authenticated librarian/admin accounts, secure PDF storage, backups, and Excel import.
-
-PDF/Copyright:
-Only upload e-books/PDFs that your institution is legally permitted to store and distribute.
+The site currently contains catalogue metadata, search and department filtering.
+The supplied files contain book records, not the actual PDF/e-book files. Therefore no PDF files were embedded.
+For a production website, connect this catalogue to a secure database and PDF storage with librarian login.
+Only upload/distribute PDFs your institution is legally permitted to use.
