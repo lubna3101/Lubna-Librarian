@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lubna Librarian | College Library</title>
+<style>
+:root{--blue:#123b63;--blue2:#1c5d8f;--gold:#c89b3c;--light:#f5f8fb;--dark:#17324d}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:var(--light);color:#243447}
+header{background:linear-gradient(135deg,var(--blue),var(--blue2));color:white;padding:22px 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;position:sticky;top:0;z-index:5}
+.brand{font-size:25px;font-weight:800}.brand span{color:#ffd36b}
+nav a{color:white;text-decoration:none;margin:0 8px;font-size:14px}
+.hero{padding:65px 6%;background:white;display:grid;grid-template-columns:1.5fr 1fr;gap:30px;align-items:center}
+.hero h1{font-size:48px;margin:0 0 12px;color:var(--dark)} .hero p{font-size:18px;line-height:1.6}
+.hero-card{background:linear-gradient(145deg,#173f65,#0e2d4b);color:white;padding:30px;border-radius:18px;box-shadow:0 12px 30px #0002}
+.btn{display:inline-block;background:var(--gold);color:white;border:0;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:700;cursor:pointer}
+section{padding:45px 6%}.section-title{text-align:center;margin-bottom:28px;color:var(--dark)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.stat,.card{background:white;border-radius:14px;padding:22px;box-shadow:0 5px 18px #0000000d}
+.stat b{display:block;font-size:30px;color:var(--blue2);margin-top:8px}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}.controls input,.controls select,.form input,.form select,.form textarea{padding:12px;border:1px solid #ccd6df;border-radius:8px;width:100%}
+.controls input{flex:1;min-width:220px}.controls select{width:220px}
+table{width:100%;border-collapse:collapse;background:white;border-radius:12px;overflow:hidden}th,td{padding:12px;border-bottom:1px solid #e6ebef;text-align:left;font-size:14px}th{background:#eaf2f8;color:var(--dark)}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.full{grid-column:1/-1}
+.e-books{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.ebook h3{margin-bottom:8px}.ebook small{color:#667}
+.notice{border-left:4px solid var(--gold);padding:15px;background:white;margin:10px 0;border-radius:8px}
+footer{background:#102c47;color:white;text-align:center;padding:28px}
+.hidden{display:none}.tag{display:inline-block;background:#eaf2f8;color:var(--blue);padding:5px 8px;border-radius:20px;font-size:12px}
+@media(max-width:800px){header{flex-direction:column;align-items:flex-start}.hero{grid-template-columns:1fr}.hero h1{font-size:36px}.stats{grid-template-columns:repeat(2,1fr)}.e-books{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">📚 Lubna <span>Librarian</span></div>
+  <nav>
+    <a href="#home">Home</a><a href="#catalogue">Catalogue</a><a href="#ebooks">E-Books</a>
+    <a href="#departments">Departments</a><a href="#notices">Notices</a><a href="#admin">Admin</a>
+  </nav>
+</header>
+
+<main id="home">
+<section class="hero">
+  <div>
+    <h1>College Library</h1>
+    <p>A modern digital library portal for managing physical books, e-books, departments, library notices and searchable book records.</p>
+    <a class="btn" href="#catalogue">Explore Catalogue</a>
+  </div>
+  <div class="hero-card">
+    <h2>Lubna Librarian</h2>
+    <p>Library Management & Digital E-Book Portal</p>
+    <p>🔎 Search books &nbsp; • &nbsp; 📖 Read e-books &nbsp; • &nbsp; 🗂 Manage records</p>
+  </div>
+</section>
+
+<section>
+  <div class="stats">
+    <div class="stat">Total Books<b id="totalBooks">0</b></div>
+    <div class="stat">E-Books<b id="totalEbooks">0</b></div>
+    <div class="stat">Departments<b id="totalDepartments">0</b></div>
+    <div class="stat">Available<b id="availableBooks">0</b></div>
+  </div>
+</section>
+
+<section id="catalogue">
+<h2 class="section-title">📚 Book Catalogue</h2>
+<div class="controls">
+  <input id="search" placeholder="Search title, author, ISBN, accession no...">
+  <select id="deptFilter"><option value="">All Departments</option></select>
+</div>
+<table><thead><tr><th>Accession No.</th><th>Title</th><th>Author</th><th>ISBN</th><th>DDC</th><th>Department</th><th>Status</th></tr></thead>
+<tbody id="bookTable"></tbody></table>
+</section>
+
+<section id="ebooks">
+<h2 class="section-title">📖 E-Books Library</h2>
+<div class="e-books" id="ebookGrid"></div>
+</section>
+
+<section id="departments">
+<h2 class="section-title">🏫 Departments</h2>
+<div class="stats" id="departmentCards"></div>
+</section>
+
+<section id="notices">
+<h2 class="section-title">📢 Library Notices</h2>
+<div id="noticeList">
+  <div class="notice"><b>Library Notice</b><br>Students are requested to return borrowed books according to the library rules.</div>
+  <div class="notice"><b>Digital Library</b><br>Authorized e-books can be accessed through the E-Books section.</div>
+</div>
+</section>
+
+<section id="admin">
+<h2 class="section-title">🔐 Librarian Admin Dashboard</h2>
+<div class="card">
+  <h3>Add New Book / E-Book</h3>
+  <form class="form" id="bookForm">
+    <div class="form-grid">
+      <div><label>Accession Number</label><input id="accession" required></div>
+      <div><label>Book Title</label><input id="title" required></div>
+      <div><label>Author</label><input id="author" required></div>
+      <div><label>ISBN</label><input id="isbn"></div>
+      <div><label>DDC</label><input id="ddc"></div>
+      <div><label>Edition</label><input id="edition"></div>
+      <div><label>Publisher</label><input id="publisher"></div>
+      <div><label>Publication Year</label><input id="year" type="number"></div>
+      <div><label>Department</label><input id="department" required></div>
+      <div><label>Shelf / Rack No.</label><input id="shelf"></div>
+      <div><label>Status</label><select id="status"><option>Available</option><option>Issued</option><option>Reference Only</option></select></div>
+      <div><label>E-Book PDF (optional)</label><input id="pdf" type="file" accept="application/pdf"></div>
+      <div class="full"><button class="btn" type="submit">➕ Add Book</button> <button class="btn" type="button" onclick="clearAll()">Clear All Demo Data</button></div>
+    </div>
+  </form>
+  <p><small>Prototype note: records are saved in this browser using local storage. A production version should use a secure server/database and authenticated librarian accounts.</small></p>
+</div>
+</section>
+</main>
+<footer>© 2026 Lubna Librarian • College Library Digital Portal</footer>
+
+<script>
+const KEY="lubnaLibraryBooks";
+let books=JSON.parse(localStorage.getItem(KEY)||"[]");
+if(!books.length){
+ books=[
+ {accession:"LIB-001",title:"Introduction to Biology",author:"Campbell",isbn:"978000000001",ddc:"570",department:"Biology",status:"Available"},
+ {accession:"LIB-002",title:"Pakistan Studies",author:"A. Khan",isbn:"978000000002",ddc:"954",department:"Pakistan Studies",status:"Available"},
+ {accession:"LIB-003",title:"Computer Fundamentals",author:"P. Norton",isbn:"978000000003",ddc:"004",department:"Computer Science",status:"Issued"}
+ ];
+ save();
+}
+function save(){localStorage.setItem(KEY,JSON.stringify(books));render()}
+function render(){
+ const q=(document.getElementById("search")?.value||"").toLowerCase();
+ const dep=document.getElementById("deptFilter")?.value||"";
+ const filtered=books.filter(b=>(!dep||b.department===dep)&&Object.values(b).some(v=>String(v).toLowerCase().includes(q)));
+ document.getElementById("bookTable").innerHTML=filtered.map(b=>`<tr><td>${b.accession}</td><td>${b.title}</td><td>${b.author}</td><td>${b.isbn||"-"}</td><td>${b.ddc||"-"}</td><td><span class="tag">${b.department}</span></td><td>${b.status}</td></tr>`).join("")||'<tr><td colspan="7">No books found.</td></tr>';
+ const depts=[...new Set(books.map(b=>b.department).filter(Boolean))];
+ document.getElementById("deptFilter").innerHTML='<option value="">All Departments</option>'+depts.map(d=>`<option>${d}</option>`).join("");
+ document.getElementById("totalBooks").textContent=books.length;
+ document.getElementById("totalEbooks").textContent=books.filter(b=>b.pdfName).length;
+ document.getElementById("totalDepartments").textContent=depts.length;
+ document.getElementById("availableBooks").textContent=books.filter(b=>b.status==="Available").length;
+ document.getElementById("departmentCards").innerHTML=depts.map(d=>`<div class="stat">${d}<b>${books.filter(b=>b.department===d).length}</b></div>`).join("");
+ document.getElementById("ebookGrid").innerHTML=books.filter(b=>b.pdfName).map(b=>`<div class="card ebook"><h3>📘 ${b.title}</h3><p>${b.author}</p><small>${b.department} • ${b.pdfName}</small><br><br><button class="btn" onclick="alert('PDF viewing in this prototype is represented by the stored file record. A production version will securely serve the PDF.')">Read / View</button></div>`).join("")||'<div class="card">No e-books uploaded yet. Add a book from the Admin Dashboard and select a PDF.</div>';
+}
+document.getElementById("search").addEventListener("input",render);
+document.getElementById("deptFilter").addEventListener("change",render);
+document.getElementById("bookForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const file=document.getElementById("pdf").files[0];
+ books.push({
+ accession:accession.value,title:title.value,author:author.value,isbn:isbn.value,ddc:ddc.value,
+ edition:edition.value,publisher:publisher.value,year:year.value,department:department.value,
+ shelf:shelf.value,status:status.value,pdfName:file?file.name:""
+ });
+ save(); e.target.reset(); alert("Book record added successfully.");
+});
+function clearAll(){if(confirm("Clear all prototype data?")){localStorage.removeItem(KEY);location.reload()}}
+render();
+</script>
+</body>
+</html>
